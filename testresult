@@ -53,3 +53,61 @@ func_def
   --aceppt state--
 
 --PARSE SUCCESSFUL --
+bar
+  0 {'b':1, } {} 
+  1 {'a':2, } {} 
+  2 {'r':3, } {} 
+  3 {} {} 
+  optional: {} 
+  accept: [3]
+
+
+foo
+  0 {'f':1, } {} 
+  1 {'o':2, } {} 
+  2 {'o':3, } {} 
+  3 {} {} 
+  optional: {} 
+  accept: [3]
+
+
+func_def
+  0 {'a':1, } {} 
+  1 {'f':2, } {} 
+  2 {} {'@bar':3, '@foo':3, } 
+  3 {'z':4, } {} 
+  4 {} {} 
+  optional: {'1':2, } 
+  accept: [4]
+
+
+--PARSE 'abarz'
+
+  --parse func_def 'afooz'--
+  a [{'a': 1}, {}]
+  --optional--
+  f [{'f': 2}, {}]
+  o [{}, {'@foo': 3, '@bar': 3}]
+
+  --parse bar 'ooz'--
+  o [{'b': 1}, {}]
+
+  --parse foo 'ooz'--
+  o [{'f': 1}, {}]
+
+  --optional rewind--
+  f [{}, {'@foo': 3, '@bar': 3}]
+
+  --parse bar 'fooz'--
+  f [{'b': 1}, {}]
+
+  --parse foo 'fooz'--
+  f [{'f': 1}, {}]
+  o [{'o': 2}, {}]
+  o [{'o': 3}, {}]
+  --aceppt state--
+
+  z [{'z': 4}, {}]
+  --aceppt state--
+
+--PARSE SUCCESSFUL --
