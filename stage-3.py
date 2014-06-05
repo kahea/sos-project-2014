@@ -217,8 +217,8 @@ class Lex:
 				else:
 					return (False, pos)
           
-    if pos < len(string):
-      return (False, pos)
+		if pos < len(string):
+			return (False, pos)
     
 		if row in dfa.accept:
 			return (True, pos)
