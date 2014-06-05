@@ -2,11 +2,11 @@
 import sys
 
 def print_dic(dic):
-	sys.stdout.write('{')
-	keys = sorted(dic)
-	for key in keys:
-		sys.stdout.write("'" + str(key) + "'" + ':' + str(dic[key]) + ', ')
-	sys.stdout.write('} ')
+  sys.stdout.write('{')
+  keys = sorted(dic)
+  for key in keys:
+    sys.stdout.write("'" + str(key) + "'" + ':' + str(dic[key]) + ', ')
+  sys.stdout.write('} ')
 
 class Lex:
 	
@@ -300,7 +300,8 @@ class Reader:
 					literal = ''
 
 lex = Lex()
-reader = Reader('rules', lex)
+reader = Reader('input.txt', lex)
 #lex.print_rules()
 
-lex.parse('func_def', 'abfooz')
+lex.parse('func_def', 'abbarz')
+
