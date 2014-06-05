@@ -51,11 +51,13 @@ class Lex:
 			
 		def print(self):
 			for x, row in enumerate(self.table):
-				sys.stdout.write(str(x) + ' ')
+				sys.stdout.write('  ' + str(x) + ' ')
 				print_dic(row[0])
 				print_dic(row[1])
 				print('')
+			sys.stdout.write('  optional: ')
 			print_dic(self.optional)
+			sys.stdout.write('\n  accept: ')
 			print(self.accept)
 			print('')
 	
@@ -151,9 +153,9 @@ class Lex:
 	def print_rules(self):
 		rules = sorted(self.rules)
 		for rule in rules:
-			print('')
 			print(rule)
 			self.rules[rule].print()
+			print('')
 	
 	def doparse(self, rule, string):
 		dfa = self.rules[rule]
@@ -163,9 +165,15 @@ class Lex:
 		stack = []
 		opstack = []
 		
-		#print('\nparse ' + rule + ' ' + string)
+		print('\n  --parse ' + rule + ' ' + string + '--')
 		
 		while pos < len(string):
+			
+			if row in dfa.accept:
+				if pos < len(string)-1:
+					return (False, pos)
+				print('  --aceppt state--')
+				return (True, pos)
 
 			l = len(dfa.get_productions(row))
 			if l:
@@ -173,25 +181,22 @@ class Lex:
 			
 			ch = string[pos]
 			
-			print(ch + ' ' + str(row) + ' ' + str(pos))
+			print('  ' + ch + ' ' + str(dfa.table[row]))
 			
 			if ch in dfa.get_terminals(row):
 				row = dfa.get_terminals(row)[ch];
 				pos += 1
 				
 				if row in dfa.optional:
+					print('  --optional--')
 					opstack.append((dfa.optional[row], pos))
 					
 			elif row in dfa.optional:
-				print('--op--')
+				print('  --optional--')
 				row = dfa.optional[row]
-				
-			elif row in dfa.accept:
-				return (True, pos)
 				
 			else:
 				if len(stack):
-					print('--ref--')
 					stac = stack[-1]
 					
 					found = False
@@ -210,25 +215,27 @@ class Lex:
 					print('')
 					if not found:
 						if len(opstack):
+							print('  --optional rewind--')
 							row, pos = opstack.pop(0)
 						else:
 							return (False, pos)
 					
 				else:
 					return (False, pos)
-          
-    if pos < len(string):
-      return (False, pos)
+
+		if pos < len(string)-1:
+			print('  --fail leftover input--')
+			return (False, pos)
     
+		print('  --aceppt state--')
 		if row in dfa.accept:
 			return (True, pos)
 
 	def parse(self, rule, string):
-		self.rules[rule].print()
 		if (self.doparse(rule, string)[0]):
-			print('good parse')
+			print('\n--PARSE SUCCESSFUL --')
 		else:
-			print('bad parse')
+			print('\n--PARSE FAIL --')
 			
 	
 class Reader:
@@ -303,9 +310,11 @@ class Reader:
 					literal = ''
 
 lex = Lex()
-reader = Reader('input.txt', lex)
-#lex.print_rules()
+reader = Reader('stage-3.rules', lex)
+lex.print_rules()
 
-lex.parse('func_def', 'abbarzz')
+string = 'abarz'
+print('--PARSE \'' + string + '\'')
+lex.parse('func_def', 'abarz')
 
 
