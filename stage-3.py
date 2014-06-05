@@ -9,7 +9,7 @@ def print_dic(dic):
   sys.stdout.write('} ')
 
 class Lex:
-	
+  
 	class DFA:
 		def __init__(self):
 			self.table = [[{}, {}]]
@@ -216,7 +216,10 @@ class Lex:
 					
 				else:
 					return (False, pos)
-					
+          
+    if pos < len(string):
+      return (False, pos)
+    
 		if row in dfa.accept:
 			return (True, pos)
 
@@ -303,5 +306,6 @@ lex = Lex()
 reader = Reader('input.txt', lex)
 #lex.print_rules()
 
-lex.parse('func_def', 'abbarz')
+lex.parse('func_def', 'abbarzz')
+
 
