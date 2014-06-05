@@ -1,0 +1,22 @@
+
+Importance is to visualize what I have learned (functionality is less 
+important compared to strong visuals and examples of principles)
+
+
+
+show how grammar can be represented in a syntax digram
+
+
+??presentation is a live example, writing the rules from scratch, probably a 
+canned presentation(maybe a video) ??
+
+
+
+step 1:
+	define what a programming language is
+		concise grammar ...
+
+	show the ways we represent that
+	    dfa, context-free grammar
+
+    show the transformations

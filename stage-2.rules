@@ -1,0 +1,83 @@
+
+colon			=>	:	;
+colon_dub		=>	::	;
+equal_dub		=>	==	;
+assignment		=>	:=	;
+newline			=>	\n	;
+tab				=>	\t	;
+operator		=>	+ | - | :=;
+conditional		=>	if | else | elsif | for | while	;
+logical			=>	and | or | not	;
+boolean			=>	true | false	;
+type			=>	int | char	;
+return			=>	return	;
+return			=>	ret	;
+id				=>	[a-z]*	;
+const_int		=>	[0-9]*	;
+
+#
+
+const = const_int ;
+
+#
+
+fdef = id type ":" ":" (((var_dec comma)* var_dec newline block) | newline) block ;
+
+#
+
+expression = (id | const) -> operator -> (id | const) ->  newline ;
+
+statement = 
+	(id -> operator -> (id | const | function_call) ) | return -> expression ;
+
+var_dec = id -> type ;
+
+block = tab -> statement* -> newline -> block* ;
+
+function_def =
+	id -> type -> colon_dub -> ( (var_dec -> comma)* -> var_dec -> newline -> block) | newline -> block ;
+
+function_call =
+	id -> ( ( (id | const_int) -> comma)* -> (id | const_int)) | newline ;
+	
+#
+
+id
+	type	=>	variable_declearation
+	operator
+		(id | const_int)
+			newline		=>	expression
+		
+	colon
+		(id | const_int)*
+			newline		=>	function_call
+			
+tab
+	statement*
+		newline
+			block*		=>	block
+
+#
+
+expression - combination of constants, variables, operators and functions
+
+expression statement - only evaluate for side effects
+
+statement - assignment, call, return, goto, assertion
+
+compound statemetns
+	if-statement
+	for-statement
+
+#
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

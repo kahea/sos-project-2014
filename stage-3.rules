@@ -1,0 +1,73 @@
+
+
+foo = "foo" ;
+bar = "bar" ;
+
+func_def = "a" ["b"] (foo | bar) "z" ;
+
+#
+
+func_def = id [type] "::" [{ id type }] "\n" ;
+
+program = func_def ;
+
+#
+
+alpha = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
+
+type = "int" | "char" ;
+
+.. = { " " } ;
+
+id = { alpha } ;
+
+func_def = id .. [type] .. "::" .. [ { .. id .. type } .. ] "\n" ;
+
+program = { func_def } ;
+
+
+
+#
+
+alpha = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" ;
+
+digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" ;
+#
+cond = "if" | "else" | "for" ;
+
+operator = "+" | "-" ;
+
+type = "int" | "char" ;
+
+.. = { " " } ;
+
+#
+
+id = { alpha } ;
+
+literal_int = { digit } ;
+
+block = "\n" { statement } ;
+
+#
+
+var_dec = id .. type .. "\n" ;
+
+func_call = id [..] ":" [{ .. id | const }] [..] "\n" ;
+
+
+
+expression = (id | literal_int) .. operator .. (id | literal_int) .. "\n" ;
+
+return = "ret" (expr | func_call) ;
+
+statement = return | var_dec | operation ;
+
+
+statement = id [..] operator [..] (id | literal_int | func_def) "\n" ;
+
+
+func_def = id .. [type] .. "::" .. [ { .. id .. type } ] .. "\n" { block } ;
+
+program = { func_def } ;
+

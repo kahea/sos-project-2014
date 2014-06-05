@@ -1,0 +1,118 @@
+
+
+Pre-stages
+
+	Build an Assembler
+	
+		- to long (project unto itself)
+		- especially hard for CISC architectures
+		
+	Bottom Up (from NASM assembler)
+	
+		- write the whole thing in assembly/modified assembly
+		- extend NASM syntax incrementally
+		- gave up on this path even though I'd like to explore it again sometime
+		- this part is essential if you want to write a compiler
+		
+	Library options
+	
+		- not using any external libraries 
+		- not because i think there bad, but i want to learn what they do
+		- lex and yacc are standards
+		- llvm (low level virtual machine)
+
+Python
+
+	- interpreted (faster developement)
+	- automatic memory
+	- built in string handling functions
+	- lists and dictionaries
+	- did not use any regex libraries
+	
+	- always on interpreting
+	- see where interpreter checks syntax but not sematics
+
+
+Stage 1 -Hand coded (472 lines)
+
+	- Just start coding, no planning or thinking ahead
+	
+	Structures
+
+		Tokens
+			- Linked list of tokens
+			
+		Ad hoc parsing
+
+		Semantic analysis 
+			- Namespace checking
+		
+	Learned
+	
+		- Dont do it this way
+		- No specification or structure for this
+		
+	Results
+		
+		- Birth to Reader class
+		
+
+
+Stage 2 (reader(75) + dfa (terminals)(122) nfa(181) (130) + parser(122) ) (709 lines)
+
+
+	- switched to parsing syntax notation
+	- much easier to make changes then hard code
+	
+	Syntax Notation
+	
+		- terminal only productions seperated by
+	
+		- repetition uses kleene star
+			- moved away from this because of its postfix notation
+			
+		- experimental formats
+		- explain tabbed one
+		
+		- rules with only terminals are seperate data structures from ones with
+		  non-terminals
+
+Stage 3
+
+	Syntax Notation
+		
+		- production on left
+		
+		- almost identical to Wirth syntax notation (not a copy more just evolved this way)
+		- Wirth alternative to BNF predecessor to EBNF. 
+		- mine different not ',' for concatenation
+		
+		- parens were difficult especially doing them iteratively
+		- needed lots of stacks
+		
+		Data Structure
+		
+		- table [{}, {}]  first for terminals, second for productions
+
+
+	New Reader
+
+		- new methodology (state based programming)
+		- state based programming is rather interesting
+		
+		- eventually replaced by syntax notation 
+		- would need integrate semantic analysis into it
+		
+	Parser Builder
+	
+		- iterative, so lots of stacks, not really the easiest or clearest way
+		  to implement this
+
+	Recursive Descent Parser (doparse())
+
+
+Resources
+
+	youtube videos on compilers
+	really helped with DFA
+
